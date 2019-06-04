@@ -9,6 +9,7 @@ import importlib
 from ..multi_tensor_apply import multi_tensor_applier
 
 imported_flatten_impl = False
+param_signsgd = True
 
 def import_flatten_impl():
     global flatten_impl, unflatten_impl, imported_flatten_impl
@@ -36,6 +37,10 @@ def unflatten(coalesced, bucket):
 def apply_flat_dist_call(bucket, call, extra_args=None):
 
     coalesced = flatten(bucket)
+
+    #took sign of the gradient
+    if param_signsgd = True:
+        coalesced = torch.sign(coalesced)
 
     if extra_args is not None:
         call(coalesced, *extra_args)
